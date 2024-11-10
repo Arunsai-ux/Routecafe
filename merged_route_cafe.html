@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Cafe</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0; }
+        .header { background-color: #333; color: #fff; padding: 20px; text-align: center; width: 100%; position: relative; }
+        .cart-icon { position: absolute; top: 20px; right: 20px; cursor: pointer; }
+        .product, .checkout-form { border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin: 10px; width: 200px; text-align: center; }
+        .product img { width: 100%; height: auto; margin-bottom: 10px; border-radius: 5px; }
+        .checkout-button { background-color: #007bff; padding: 15px 30px; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .footer { background-color: #f8f9fa; text-align: center; padding: 20px; width: 100%; position: fixed; bottom: 0; }
+        #product-list, #cart-page, #checkout-page { display: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Route Cafe</h1>
+        <p>Your friendly neighborhood cafe. Come and enjoy!</p>
+        <img src="https://cdn-icons-png.flaticon.com/512/34/34627.png" alt="Cart" class="cart-icon" onclick="goToCart()" width="30" height="30">
+    </div>
+
+    <!-- Product List Page -->
+    <div id="product-list">
+        <div class="product"><img src="https://via.placeholder.com/150?text=Coffee" alt="Coffee"><h3>Coffee</h3><p>Price: Rs. 120</p><button onclick="addToCart('Coffee', 120)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Tea" alt="Tea"><h3>Tea</h3><p>Price: Rs. 100</p><button onclick="addToCart('Tea', 100)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=French+Fries" alt="French Fries"><h3>French Fries</h3><p>Price: Rs. 150</p><button onclick="addToCart('French Fries', 150)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Brownies" alt="Brownies"><h3>Brownies</h3><p>Price: Rs. 180</p><button onclick="addToCart('Brownies', 180)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Ice+Cream" alt="Ice Cream"><h3>Ice Cream</h3><p>Price: Rs. 160</p><button onclick="addToCart('Ice Cream', 160)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Milkshake" alt="Milkshake"><h3>Milkshake</h3><p>Price: Rs. 190</p><button onclick="addToCart('Milkshake', 190)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Fresh+Juice" alt="Fresh Juice"><h3>Fresh Juice</h3><p>Price: Rs. 130</p><button onclick="addToCart('Fresh Juice', 130)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Potato+Wedges" alt="Potato Wedges"><h3>Potato Wedges</h3><p>Price: Rs. 140</p><button onclick="addToCart('Potato Wedges', 140)">Add to Cart</button></div>
+        <div class="product"><img src="https://via.placeholder.com/150?text=Nuggets" alt="Nuggets"><h3>Nuggets</h3><p>Price: Rs. 170</p><button onclick="addToCart('Nuggets', 170)">Add to Cart</button></div>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart-page">
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <button id="checkout-button" class="checkout-button" onclick="goToCheckout()">Proceed to Checkout</button>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="checkout-page" class="checkout-form">
+        <h2>Delivery Address</h2>
+        <label for="address">Street Address</label>
+        <input type="text" id="address" placeholder="Enter your street address" required><br>
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" required><br>
+        <label for="postal">Postal Code</label>
+        <input type="number" id="postal" placeholder="Enter postal code" required><br>
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required><br>
+
+        <h2>Payment Options</h2>
+        <label><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label><br>
+        <input type="button" value="Place Order" onclick="placeOrder()">
+    </div>
+
+    <div class="footer">
+        <p>Contact us: 9988776655 | Route Cafe, Hosur</p>
+    </div>
+
+    <script>
+        let cart = [];
+        document.getElementById('product-list').style.display = 'block';
+
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            alert(item + " has been added to your cart!");
+            updateCheckoutButton();
+        }
+
+        function goToCart() {
+            document.getElementById('product-list').style.display = 'none';
+            document.getElementById('checkout-page').style.display = 'none';
+            document.getElementById('cart-page').style.display = 'block';
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<li>Your cart is empty.</li>';
+            } else {
+                cart.forEach((product) => {
+                    const item = document.createElement('li');
+                    item.textContent = `${product.item} - Rs. ${product.price}`;
+                    cartItems.appendChild(item);
+                });
+            }
+            updateCheckoutButton();
+        }
+
+        function goToCheckout() {
+            if (cart.length > 0) {
+                document.getElementById('cart-page').style.display = 'none';
+                document.getElementById('checkout-page').style.display = 'block';
+            }
+        }
+
+        function updateCheckoutButton() {
+            const checkoutButton = document.getElementById('checkout-button');
+            checkoutButton.disabled = cart.length === 0;
+        }
+
+        function placeOrder() {
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const postal = document.getElementById('postal').value;
+            const phone = document.getElementById('phone').value;
+            if (address && city && postal && phone) {
+                alert("Order placed successfully!");
+                cart = [];
+                document.getElementById('product-list').style.display = 'block';
+                document.getElementById('cart-page').style.display = 'none';
+                document.getElementById('checkout-page').style.display = 'none';
+                document.getElementById('cart-items').innerHTML = '';
+            } else {
+                alert("Please fill in all required fields.");
+            }
+        }
+    </script>
+</body>
+</html>
