@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Cafe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .product, .checkout-form {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product h3, .checkout-form h2 {
+            margin: 10px 0;
+        }
+        .product p, .checkout-form label {
+            color: #888;
+        }
+        .product button, .checkout-form input[type="submit"], .checkout-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .checkout-button {
+            background-color: #007bff;
+            padding: 15px 30px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        #product-list, #checkout-page {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Route Cafe</h1>
+        <p>Your friendly neighborhood cafe. Come and enjoy!</p>
+    </div>
+
+    <!-- Product List Page -->
+    <div id="product-list">
+        <div class="product">
+            <h3>Coffee</h3>
+            <p>Price: ?120</p>
+            <button onclick="addToCart('Coffee')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Tea</h3>
+            <p>Price: ?100</p>
+            <button onclick="addToCart('Tea')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>French Fries</h3>
+            <p>Price: ?150</p>
+            <button onclick="addToCart('French Fries')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Brownies</h3>
+            <p>Price: ?180</p>
+            <button onclick="addToCart('Brownies')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Ice Cream</h3>
+            <p>Price: ?160</p>
+            <button onclick="addToCart('Ice Cream')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Milkshake</h3>
+            <p>Price: ?190</p>
+            <button onclick="addToCart('Milkshake')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Fresh Juice</h3>
+            <p>Price: ?130</p>
+            <button onclick="addToCart('Fresh Juice')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Potato Wedges</h3>
+            <p>Price: ?140</p>
+            <button onclick="addToCart('Potato Wedges')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Nuggets</h3>
+            <p>Price: ?170</p>
+            <button onclick="addToCart('Nuggets')">Add to Cart</button>
+        </div>
+
+        <a href="#" class="checkout-button" onclick="goToCheckout()">Proceed to Checkout</a>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="checkout-page" class="checkout-form">
+        <h2>Delivery Address</h2>
+        <label for="address">Street Address</label>
+        <input type="text" id="address" placeholder="Enter your street address" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" required>
+
+        <label for="postal">Postal Code</label>
+        <input type="number" id="postal" placeholder="Enter postal code" required>
+
+        <h2>Payment Options</h2>
+        <label>
+            <input type="radio" name="payment" value="cod" checked>
+            Cash on Delivery
+        </label>
+
+        <input type="submit" value="Place Order" onclick="placeOrder()">
+    </div>
+
+    <div class="footer">
+        <p>Contact us: 9988776655 | Route Cafe, Kelamangalam Main Road, Hosur</p>
+    </div>
+
+    <script>
+        // Display the product list by default
+        document.getElementById('product-list').style.display = 'block';
+
+        function addToCart(item) {
+            alert(item + " has been added to your cart!");
+        }
+
+        function goToCheckout() {
+            // Hide product list and show checkout page
+            document.getElementById('product-list').style.display = 'none';
+            document.getElementById('checkout-page').style.display = 'block';
+        }
+
+        function placeOrder() {
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const postal = document.getElementById('postal').value;
+
+            if (address && city && postal) {
+                alert("Thank you! Your order has been placed and will be delivered to: " + address + ", " + city + ", " + postal);
+            } else {
+                alert("Please fill in all the address details.");
+            }
+        }
+    </script>
+</body>
+</html>
